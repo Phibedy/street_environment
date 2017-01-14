@@ -49,19 +49,11 @@ class RoadMatrix : public lms::Serializable {
                     float maxTranslation);
 
     /**
-     * @brief Creates a RoadMatrix representation around "line". Given
-     * deltaPosition and deltaRotation also translates previous points. This way
-     * it is possible to keep a back view of the road.
+     * @brief Creates a RoadMatrix representation around "line".
      * @param line: A line that the roadmatrix is structured around. This should
      * normally be the center line.
-     * @param deltaPosition: The moved distance of the car in old car
-     * coordinates.
-     * @param deltaRotation: The rotation of the car from old to new
-     * orientation in radians.
      */
-    void aroundLine(const lms::math::polyLine2f& line,
-                    const lms::math::vertex2f& deltaPosition,
-                    float deltaRotation);
+    void aroundLine(const lms::math::polyLine2f& line);
 
     /**
      * @brief Tries to find a cell that contains v.
@@ -98,15 +90,11 @@ class RoadMatrix : public lms::Serializable {
     lms::math::polyLine2f m_negativeCenterLine;
 
    private:
-    lms::math::polyLine2f prepCenterLine(
-        const lms::math::polyLine2f& line,
-        const lms::math::vertex2f& deltaPosition, float deltaRotation);
-    std::vector<lms::math::vertex2f> negativeCenterLinePoints(
-        const lms::math::vertex2f& deltaPosition, float deltaRotation);
+    lms::math::polyLine2f prepCenterLine(const lms::math::polyLine2f& line);
     lms::math::polyLine2f negativeCenterLine(
-        const std::vector<lms::math::vertex2f>& points);
+        const lms::math::polyLine2f& line);
 
-    void aroundLine(const lms::math::polyLine2f& line);
+    void createMatrix(const lms::math::polyLine2f& line);
 
     const lms::math::vertex2f& point(int x, int y) const;
     lms::math::vertex2f& point(int x, int y);
@@ -133,8 +121,6 @@ class RoadMatrix : public lms::Serializable {
 
     std::vector<RoadMatrixCell> m_cells;
     std::vector<lms::math::vertex2f> m_points;
-
-    lms::math::polyLine2f m_prevCenterLine;
 };
 
 }  // namespace street_environment
