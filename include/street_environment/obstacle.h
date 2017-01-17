@@ -112,28 +112,6 @@ public:
             m_points[i] = m_points[i]-delta;
         }
     }
-
-    /**
-     * @brief distanceTang
-     * @return the length to the object tangential to the road
-     */
-    float distanceTang() const;
-    /**
-     * @brief distanceOrth
-     * @return  the length to the object orthogonal to the road
-     */
-    float distanceOrth() const;
-    /**
-     * @brief velocityTang
-     * @return the velocity tang to the road
-     */
-    float velocityTang() const;
-    /**
-     * @brief velocityOrth
-     * @return the velocity orth to the road
-     */
-    float velocityOrth() const;
-
     template<class Archive>
     void serialize(Archive & archive) {
         archive (

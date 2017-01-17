@@ -22,18 +22,4 @@ lms::math::vertex2f Obstacle::position() const{
     return m_position;
 }
 
-
-float Obstacle::distanceTang() const{
-    return 0;
-}
-float Obstacle::velocityTang() const{
-    return 0;
-}
-float Obstacle::distanceOrth() const{
-    return 0;
-}
-float Obstacle::velocityOrth() const{
-    return 0;
-}
-
 } //street_environment
