@@ -85,6 +85,11 @@ public:
         invalid();
         m_points.push_back(v);
     }
+    void addPoints(const std::vector<lms::math::vertex2f> &vs){
+        for(const lms::math::vertex2f &v:vs){
+            addPoint(v);
+        }
+    }
     void clearPoints(){
         m_points.clear();
     }

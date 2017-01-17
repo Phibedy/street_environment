@@ -12,6 +12,7 @@ set(SOURCES
     "src/roadmatrix.cpp"
     "src/bounding_box.cpp"
     "src/basic_obstacle.cpp"
+    "src/basic_crossing.cpp"
 
     "test/src.cpp"
 )
@@ -29,6 +30,7 @@ set(HEADERS
     "include/street_environment/ego_motion.h"
     "include/street_environment/bounding_box.h"
     "include/street_environment/basic_obstacle.h"
+    "include/street_environment/basic_crossing.h"
     "include/street_environment_clean/entity.h"
     "include/street_environment_clean/bounding_box.h"
     "include/street_environment_clean/world.h"
