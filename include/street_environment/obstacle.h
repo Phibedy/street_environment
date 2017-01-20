@@ -10,6 +10,7 @@
 #include "cereal/types/polymorphic.hpp"
 #include "cereal/archives/portable_binary.hpp"
 #include "cereal/types/base_class.hpp"
+#include "bounding_box.h"
 
 namespace street_environment{
 /**
@@ -18,6 +19,7 @@ namespace street_environment{
  */
 class Obstacle:public EnvironmentObject, public lms::Serializable{
 
+    BoundingBox2f m_boundingBox;
     std::vector<lms::math::vertex2f> m_points;
 
     /**
@@ -28,6 +30,8 @@ class Obstacle:public EnvironmentObject, public lms::Serializable{
 
     void myValidate(){
         calculatePosition();
+        BoundingBox2f b(m_points);
+        m_boundingBox = b;
         valid = true;
     }
 
@@ -112,11 +116,16 @@ public:
             m_points[i] = m_points[i]-delta;
         }
     }
+
+    BoundingBox2f boundingBox() const{
+        validate();
+        return m_boundingBox;
+    }
+
     template<class Archive>
     void serialize(Archive & archive) {
         archive (
-            cereal::base_class<street_environment::EnvironmentObject>(this),
-            m_position);
+            cereal::base_class<street_environment::EnvironmentObject>(this),m_points);
     }
 
     // cereal implementation
