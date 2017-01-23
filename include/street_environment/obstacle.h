@@ -19,23 +19,21 @@ namespace street_environment{
  */
 class Obstacle:public EnvironmentObject, public lms::Serializable{
 
-    BoundingBox2f m_boundingBox;
     std::vector<lms::math::vertex2f> m_points;
 
-    /**
-     * @brief stores the position kalman!
-     */
-    lms::math::vertex2f m_position;
-    bool valid;
+    //Tmp variables
+    mutable lms::math::vertex2f m_position;
+    mutable bool valid;
+    mutable BoundingBox2f m_boundingBox;
 
-    void myValidate(){
+    void myValidate() const{
         calculatePosition();
         BoundingBox2f b(m_points);
         m_boundingBox = b;
         valid = true;
     }
 
-    void calculatePosition(){
+    void calculatePosition() const{
         m_position.x = 0;
         m_position.y = 0;
         if(m_points.size() == 0){
@@ -66,7 +64,7 @@ public:
     }
     void validate() const{
         if(!valid){
-            const_cast<Obstacle*>(this)->myValidate();
+            this->myValidate();
         }
     }
     std::vector<lms::math::vertex2f> points() const{
