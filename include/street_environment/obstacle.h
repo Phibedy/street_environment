@@ -57,10 +57,6 @@ public:
 
     virtual bool match(const Obstacle &obj) const;
     Obstacle();
-    /**
-     * @brief init used to init the kalman!
-     */
-    bool m_init;
 
     void invalid(){
         valid = false;

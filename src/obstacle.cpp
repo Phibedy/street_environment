@@ -5,7 +5,7 @@
 
 namespace street_environment{
 Obstacle::Obstacle() : m_position(0, 0){
-    m_init = true;
+    invalid();//needed as it has to be invalid if it is deserialized
 }
 
 
