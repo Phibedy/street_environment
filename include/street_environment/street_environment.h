@@ -13,6 +13,7 @@
 #include "cereal/types/string.hpp"
 #include "cereal/access.hpp"
 #include "cereal/types/polymorphic.hpp"
+#include <set>
 
 CEREAL_FORCE_DYNAMIC_INIT(street_environment)
 
@@ -23,10 +24,38 @@ private:
     std::string m_name;
     float m_trust;
     float m_trustLast;
+    std::set<std::string> m_detectedBySensorId;
 public:
     EnvironmentObject():m_trust(0),m_trustLast(0){
-
     }
+
+    void addSensor(const std::string &sensorId){
+        m_detectedBySensorId.insert(sensorId);
+    }
+    void addSensors(const std::set<std::string> &sensors){
+        for(const std::string &s:sensors){
+            addSensor(s);
+        }
+    }
+
+    void removeSensor(const std::string &sensorId){
+        m_detectedBySensorId.erase(sensorId);
+    }
+    bool detectedBySensor(const std::string &sensorId) const{
+        return m_detectedBySensorId.count(sensorId);
+    }
+    bool detectedBySensors(const std::set<std::string> &sensorIds) const{
+        int res = 0;
+        for(const std::string &s:sensorIds){
+            res += detectedBySensor(s);
+        }
+        return res;
+    }
+    std::set<std::string> sensors() const{
+        return sensors();
+    }
+
+
     /**
      * @brief setTrust
      * @param trust value between 0 and 1
