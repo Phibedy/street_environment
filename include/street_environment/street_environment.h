@@ -52,7 +52,7 @@ public:
         return res;
     }
     std::set<std::string> sensors() const{
-        return sensors();
+        return m_detectedBySensorId;
     }
 
 
