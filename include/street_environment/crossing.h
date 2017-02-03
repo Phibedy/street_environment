@@ -11,7 +11,7 @@ namespace street_environment{
 class Crossing:public Obstacle
 {
 private:
-    int m_blockCounter;
+    bool m_blocked;
     lms::Time m_startStop;
     float m_stopTime;
 
@@ -43,7 +43,7 @@ public:
         return m_startStop != lms::Time::ZERO;
     }
 
-    Crossing():m_blockCounter(0),m_startStop(lms::Time::ZERO),m_stopTime(2),foundOppositeStopLine(0){
+    Crossing():m_blocked(false),m_startStop(lms::Time::ZERO),m_stopTime(3),foundOppositeStopLine(0){
     }
 
     virtual bool match(const Crossing &obj) const{
@@ -55,20 +55,23 @@ public:
     }
 
     void blocked(bool blocked){
-        if(blocked){
-            m_blockCounter++;
-            if(m_blockCounter < 2) //TODO HACK
-                m_blockCounter = 2;
-            if(m_blockCounter > 10){
-                m_blockCounter = 10;
-            }
-        }else{
-            m_blockCounter--;
-        }
+        m_blocked = blocked;
+    }
+
+    lms::math::Rect blockedRect() const{
+        lms::math::vertex2f crossingPos = position();
+        lms::math::vertex2f crossingView = viewDirection().normalize();
+        lms::math::Rect blockedRect;
+        lms::math::vertex2f pos = crossingPos+crossingView*0.4+crossingView.rotateClockwise90deg()*0.8;
+        blockedRect.x = pos.x;
+        blockedRect.y = pos.y;
+        blockedRect.width = 0.4;
+        blockedRect.height = 1.4;
+        return blockedRect;
     }
 
     bool blocked() const{
-        return m_blockCounter <= 0;
+        return m_blocked;
     }
 
     // cereal implementation
@@ -79,7 +82,7 @@ public:
         void serialize(Archive & archive) {
             archive (
                 cereal::base_class<street_environment::Obstacle>(this),
-                m_blockCounter, m_startStop);
+                m_blocked, m_startStop);
         }
 
 };
