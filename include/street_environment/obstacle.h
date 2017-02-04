@@ -107,7 +107,7 @@ public:
         invalid();
         lms::math::vertex2f delta(dx,dy);
         for(int i = 0; i < (int) m_points.size(); i++){
-            m_points[i] = m_points[i]-delta;
+            m_points[i] = m_points[i]+delta;
         }
     }
 
