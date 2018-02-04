@@ -24,7 +24,7 @@ public:
     CarCommand(){
     }
     enum class StateType{
-        NOT_DEFINED,IDLE,DRIVING,PARKING_START,PARKING_FINISHED,RACE
+        NOT_DEFINED,IDLE,DRIVING,PARKING,RACE
     };
     struct State
         : public lms::Serializable
